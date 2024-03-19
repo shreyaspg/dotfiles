@@ -83,6 +83,7 @@ plugins=(
   direnv
   fzf
   z
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
