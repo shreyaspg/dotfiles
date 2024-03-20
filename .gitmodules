@@ -1,0 +1,3 @@
+[submodule "shome/nvim/.config/nvim"]
+	path = shome/nvim/.config/nvim
+	url = git@github.com:shreyaspg/starter.git
