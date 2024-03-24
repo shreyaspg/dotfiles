@@ -236,6 +236,9 @@ fi
 eval "$(zoxide init zsh)"
 export PATH=$PATH:/usr/local/go/bin
 
+# Enable go installs
+export GOPATH="$HOME/go"
+PATH="$GOPATH/bin:$PATH"
 
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
