@@ -1,6 +1,4 @@
-import = [
-    "~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"
-]
+import = ["~/.config/alacritty/themes/themes/gruvbox_material_hard_dark.toml"]
 # [colors.primary]
 # background = "#000000"
 # foreground = "#c5c8c6"
@@ -26,6 +24,25 @@ family = "CaskaydiaCove Nerd Font"
 [[mouse.bindings]]
 action = "PasteSelection"
 mouse = "Right"
+
+[[keyboard.bindings]]
+chars = "tmux -u \u000D"
+# command = { program = "tmux", args = ["-u"] }
+key = "m"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "vi ~/.zshrc \u000D"
+# command = { program = "tmux", args = ["-u"] }
+key = "z"
+mods = "Control"
+
+[[keyboard.bindings]]
+chars = "vi ~/.config/nvim/init.lua\u000D"
+# command = { program = "tmux", args = ["-u"] }
+key = "z"
+mods = "Control|Shift"
+
 
 [shell]
 program = "/bin/zsh"
