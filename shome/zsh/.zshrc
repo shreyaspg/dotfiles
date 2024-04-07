@@ -240,6 +240,9 @@ export PATH=$PATH:/usr/local/go/bin
 export GOPATH="$HOME/go"
 PATH="$GOPATH/bin:$PATH"
 
+# Set default editor as nvim
+export EDITOR="nvim"
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
