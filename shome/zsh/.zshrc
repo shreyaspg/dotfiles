@@ -243,6 +243,10 @@ PATH="$GOPATH/bin:$PATH"
 # Set default editor as nvim
 export EDITOR="nvim"
 
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
