@@ -1,0 +1,4 @@
+[submodule "shome/nvim/.config/nvim"]
+	path = shome/nvim/.config/nvim
+	url = https://github.com/shreyaspg/starter
+	branch = shrys/custom
