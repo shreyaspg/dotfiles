@@ -6,7 +6,8 @@ working_directory = "/home/shreyas/work/"
 # foreground = "#c5c8c6"
 [window]
 decorations_theme_variant = "Dark"
-decorations           = "Full"
+decorations               = "Full"
+dynamic_title             = false
 [font]
 size = 11.0
 
