@@ -136,10 +136,15 @@ alias nv="NVIM_APPNAME=lazyvim nvim"
 alias lock="set $i3lockwall i3lock -i /usr/share/backgrounds/Blue_flower_by_Elena_Stravoravdi.png -t" 
 alias teams="/opt/google/chrome/google-chrome --profile-directory=Default --app-id=cifhbcnohmdccbgoicgdjpfamggdegmo"
 
-alias cheat='echo "1->terms";echo "2->web";echo "3->slack"; echo "4->teams, mail";echo "5->notes"; echo "9->chat"'
+alias cheat='
+echo "1->terms";echo "2->web";echo "3->slack"; echo "4->teams, mail";echo "5->notes"; echo "9->chat"
+echo "Mod+Shift+n -> Mute notifications"'
 alias extend="xrandr --output HDMI-1 --auto --right-of eDP-1"
 alias shrink="xrandr --output HDMI-1 --off"
 
 export PATH="/opt/zen":$PATH
+export SSH_AUTH_SOCK=/run/fortanix/sam/ssh-user-agent.sock
 
+export EDITOR="nvim-lazyvim"
 
+source <(kubectl completion zsh)
