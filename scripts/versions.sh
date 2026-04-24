@@ -166,6 +166,28 @@ get_rofi_themes() {
 }
 
 # ----------------------------
+# Tmuxinator
+# ----------------------------
+get_tmuxinator() {
+  if cmd_exists tmuxinator; then
+    tmuxinator version | head -n1
+  else
+    echo "Not Installed"
+  fi
+}
+
+# ----------------------------
+# FZF
+# ----------------------------
+get_fzf() {
+  if cmd_exists fzf --version; then
+    fzf --version | head -n1
+  else
+    echo "Not Installed"
+  fi
+}
+
+# ----------------------------
 # Write Markdown File
 # ----------------------------
 {
@@ -188,6 +210,8 @@ get_rofi_themes() {
   echo "| Betterlockscreen | $(escape_md "$(get_bls)") |"
   echo "| Rofi | $(escape_md "$(get_rofi)") |"
   echo "| Rofi Themes | $(escape_md "$(get_rofi_themes)") |"
+  echo "| Tmuxinator | $(escape_md "$(get_tmuxinator)") |"
+  echo "| Fzf | $(escape_md "$(get_fzf)") |"
 
 } >"$OUTFILE"
 

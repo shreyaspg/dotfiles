@@ -1,6 +1,6 @@
 # Installed Tools Versions
 
-_Generated on Fri Apr 24 11:52:43 IST 2026_
+_Generated on Fri Apr 24 11:59:23 IST 2026_
 
 | Tool | Version / Build Info |
 |------|-----------------------|
@@ -16,3 +16,5 @@ _Generated on Fri Apr 24 11:52:43 IST 2026_
 | Betterlockscreen | version: v4.3.0 (dunst: true, feh: true) |
 | Rofi | Version: 1.7.5 |
 | Rofi Themes | Available |
+| Tmuxinator | tmuxinator 3.1.0 |
+| Fzf | 0.54.0 (9e92b6f) |
