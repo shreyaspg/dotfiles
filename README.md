@@ -108,12 +108,13 @@ exec --no-startup-id feh --bg-scale /usr/share/backgrounds/mountain_wall.png
     ./setup.sh
     2. Rofi config in i3
     ```
-```
+    ```
     # open rofi switcher
     bindsym $mod+Tab exec --no-startup-id rofi -show window
     bindsym $mod+t exec --no-startup-id rofi -show drun
 
     # Cheatsheet: Brings up a dmenu/rofi window with shortcuts
     bindsym $mod+F1 exec --no-startup-id ~/.config/i3/scripts/i3_cheatsheet.sh
-```
+    ```
+
 
