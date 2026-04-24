@@ -2,15 +2,20 @@
 # save as versions.sh
 # chmod +x versions.sh
 # run: ./versions.sh
+#
+# Generates:
+#   VERSIONS.md
 
 set -u
 
-print_row() {
-  printf "%-22s %s\n" "$1" "$2"
-}
+OUTFILE="VERSIONS.md"
 
 cmd_exists() {
   command -v "$1" >/dev/null 2>&1
+}
+
+escape_md() {
+  echo "$1" | sed 's/|/\\|/g'
 }
 
 # ----------------------------
@@ -25,18 +30,14 @@ get_zsh() {
 }
 
 # ----------------------------
-# Neovim (shows commit if built from source)
+# Neovim
 # ----------------------------
 get_nvim() {
   if cmd_exists nvim; then
-    local ver commit
-    ver=$(nvim --version | sed -n '1p')
-    commit=$(nvim --version | grep -i "build type\|commit" | head -n1)
-
-    if nvim --version | grep -qi "commit"; then
-      echo "$ver | $(nvim --version | grep -i commit | head -n1 | xargs)"
+    if nvim --version | grep -qi commit; then
+      echo "$(nvim --version | sed -n '1p') | $(nvim --version | grep -i commit | head -n1 | xargs)"
     else
-      echo "$ver"
+      nvim --version | sed -n '1p'
     fi
   else
     echo "Not Installed"
@@ -44,7 +45,7 @@ get_nvim() {
 }
 
 # ----------------------------
-# Alacritty (shows commit if available)
+# Alacritty
 # ----------------------------
 get_alacritty() {
   if cmd_exists alacritty; then
@@ -77,22 +78,51 @@ get_tmux() {
 }
 
 # ----------------------------
-# Betterlockscreen
+# Nerd Font
 # ----------------------------
-get_bls() {
-  if cmd_exists betterlockscreen; then
-    betterlockscreen -v 2>/dev/null | head -n2 | cut -d ' ' -f 2- | tr '\n' ' ' | xargs
+get_nerdfont() {
+  if fc-list | grep -iq "Nerd Font"; then
+    fc-list | grep -i "Nerd Font" | head -n1 | cut -d: -f2 | xargs
   else
     echo "Not Installed"
   fi
 }
 
 # ----------------------------
-# Polybar (shows git hash if source build)
+# NvChad
+# ----------------------------
+get_nvchad() {
+  local dir="$HOME/.config/nvim"
+
+  if [ -d "$dir/.git" ]; then
+    local commit branch
+    commit=$(git -C "$dir" rev-parse --short HEAD 2>/dev/null)
+    branch=$(git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    echo "Git Repo (branch=$branch, commit=$commit)"
+  elif [ -f "$dir/lua/chadrc.lua" ]; then
+    echo "Installed (non-git)"
+  else
+    echo "Not Detected"
+  fi
+}
+
+# ----------------------------
+# Polybar
 # ----------------------------
 get_polybar() {
   if cmd_exists polybar; then
-    polybar --version | head -n3 | tr '\n' ' ' | sed 's/  */ /g'
+    polybar --version | head -n3 | tr '\n' ' ' | xargs
+  else
+    echo "Not Installed"
+  fi
+}
+
+# ----------------------------
+# Betterlockscreen
+# ----------------------------
+get_bls() {
+  if cmd_exists betterlockscreen; then
+    betterlockscreen -v 2>/dev/null | head -n2 | cut -d ' ' -f 2- | tr '\n' ' ' | xargs
   else
     echo "Not Installed"
   fi
@@ -110,44 +140,13 @@ get_rofi() {
 }
 
 # ----------------------------
-# Nerd Font
-# ----------------------------
-get_nerdfont() {
-  if fc-list | grep -iq "Nerd Font"; then
-    fc-list | grep -i "Nerd Font" | head -n1 | cut -d: -f2 | xargs
-  else
-    echo "Not Installed"
-  fi
-}
-
-# ----------------------------
-# NvChad (git commit if repo)
-# ----------------------------
-get_nvchad() {
-  local dir="$HOME/.config/nvim"
-
-  if [ -d "$dir/.git" ]; then
-    local commit branch
-    commit=$(git -C "$dir" rev-parse --short HEAD 2>/dev/null)
-    branch=$(git -C "$dir" rev-parse --abbrev-ref HEAD 2>/dev/null)
-    echo "Git Repo | branch=$branch | commit=$commit"
-  elif [ -f "$dir/lua/chadrc.lua" ]; then
-    echo "Installed (non-git)"
-  else
-    echo "Not Detected"
-  fi
-}
-
-# ----------------------------
 # Polybar Themes
 # ----------------------------
 get_polybar_themes() {
-  if [ -d "$HOME/.config/polybar" ]; then
-    if [ -d "$HOME/.config/polybar/.git" ]; then
-      git -C "$HOME/.config/polybar" rev-parse --short HEAD 2>/dev/null
-    else
-      echo "Config Present"
-    fi
+  if [ -d "$HOME/.config/polybar/.git" ]; then
+    git -C "$HOME/.config/polybar" rev-parse --short HEAD 2>/dev/null
+  elif [ -d "$HOME/.config/polybar" ]; then
+    echo "Config Present"
   else
     echo "Not Detected"
   fi
@@ -166,23 +165,30 @@ get_rofi_themes() {
   fi
 }
 
-echo "=========================================================="
-echo "               Installed Tools + Build Info"
-echo "=========================================================="
-echo
+# ----------------------------
+# Write Markdown File
+# ----------------------------
+{
+  echo "# Installed Tools Versions"
+  echo
+  echo "_Generated on $(date)_"
+  echo
+  echo "| Tool | Version / Build Info |"
+  echo "|------|-----------------------|"
 
-print_row "ZSH" "$(get_zsh)"
-print_row "Neovim" "$(get_nvim)"
-print_row "Alacritty" "$(get_alacritty)"
-print_row "Ripgrep" "$(get_rg)"
-print_row "Tmux" "$(get_tmux)"
-print_row "NerdFont" "$(get_nerdfont)"
-print_row "NvChad" "$(get_nvchad)"
-print_row "Polybar" "$(get_polybar)"
-print_row "Polybar Themes" "$(get_polybar_themes)"
-print_row "Betterlockscreen" "$(get_bls)"
-print_row "Rofi" "$(get_rofi)"
-print_row "Rofi Themes" "$(get_rofi_themes)"
+  echo "| ZSH | $(escape_md "$(get_zsh)") |"
+  echo "| Neovim | $(escape_md "$(get_nvim)") |"
+  echo "| Alacritty | $(escape_md "$(get_alacritty)") |"
+  echo "| Ripgrep | $(escape_md "$(get_rg)") |"
+  echo "| Tmux | $(escape_md "$(get_tmux)") |"
+  echo "| NerdFont | $(escape_md "$(get_nerdfont)") |"
+  echo "| NvChad | $(escape_md "$(get_nvchad)") |"
+  echo "| Polybar | $(escape_md "$(get_polybar)") |"
+  echo "| Polybar Themes | $(escape_md "$(get_polybar_themes)") |"
+  echo "| Betterlockscreen | $(escape_md "$(get_bls)") |"
+  echo "| Rofi | $(escape_md "$(get_rofi)") |"
+  echo "| Rofi Themes | $(escape_md "$(get_rofi_themes)") |"
 
-echo
-echo "=========================================================="
+} >"$OUTFILE"
+
+echo "Generated $OUTFILE"
