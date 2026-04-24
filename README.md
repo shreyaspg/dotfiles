@@ -30,19 +30,6 @@ chezmoi init --apply --verbose https://github.com/shreyaspg/dotfiles
 ```
 
 
-## Dependencies:
-1.  [ZSH](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH#install-and-set-up-zsh-as-default)
-2.  [Neovim-v0.9.5](https://github.com/neovim/neovim/releases/tag/v0.9.5)
-3.  [Alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu)
-4.  [Ripgrep](https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation)
-5.  [NvChad](https://nvchad.com/docs/quickstart/install)
-6.  [Tmux](https://github.com/tmux/tmux/wiki/Installing)
-7.  [NerdFont](https://www.nerdfonts.com/)
-8.  [Polybar Themes](https://github.com/adi1090x/polybar-themes)
-9.  [Betterlockscreen](https://github.com/betterlockscreen/betterlockscreen.git)
-10. [Rofi Themes](https://github.com/adi1090x/rofi) 
-
-
 ## i3 Setup
 ```
 sudo apt install -y i3 i3status dmenu feh rofi
@@ -117,4 +104,15 @@ exec --no-startup-id feh --bg-scale /usr/share/backgrounds/mountain_wall.png
     bindsym $mod+F1 exec --no-startup-id ~/.config/i3/scripts/i3_cheatsheet.sh
     ```
 
+## Dependencies:
+1.  [ZSH](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH#install-and-set-up-zsh-as-default)
+2.  [Neovim-v0.9.5](https://github.com/neovim/neovim/releases/tag/v0.9.5)
+3.  [Alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu)
+4.  [Ripgrep](https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation)
+5.  [NvChad](https://nvchad.com/docs/quickstart/install)
+6.  [Tmux](https://github.com/tmux/tmux/wiki/Installing)
+7.  [NerdFont](https://www.nerdfonts.com/)
+8.  [Polybar Themes](https://github.com/adi1090x/polybar-themes)
+9.  [Betterlockscreen](https://github.com/betterlockscreen/betterlockscreen.git)
+10. [Rofi Themes](https://github.com/adi1090x/rofi) 
 
