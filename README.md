@@ -106,8 +106,8 @@ exec --no-startup-id feh --bg-scale /usr/share/backgrounds/mountain_wall.png
     $ cd rofi
     $ chmod +x setup.sh
     ./setup.sh
-    2. Rofi config in i3
     ```
+    2. Rofi config in i3
     ```
     # open rofi switcher
     bindsym $mod+Tab exec --no-startup-id rofi -show window
