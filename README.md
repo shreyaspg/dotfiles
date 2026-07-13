@@ -11,23 +11,66 @@
 3. Clone the starter repo `github.com/shreyaspg/starter` inside `shome/nvim/.config`
 3. Run `stow -vt ~ *` inside `shome`
 
-## 2. Using Chezmoi
-## Setup:
+## 2. Using Chezmoi (recommended)
+
+### First-time setup on a fresh machine
+Install chezmoi, pull this repo, and apply it in one command:
 ```
-chezmoi init https://github.com/shreyaspg/dotfiles
+sh -c "$(curl -fsSL get.chezmoi.io)" -- init --apply --verbose https://github.com/shreyaspg/dotfiles
 ```
-You can then see what would be changed:
-```
-chezmoi diff
-```
-If you're happy with the changes then apply them:
-```
-chezmoi apply
-```
-The above commands can be combined into a single command to initialize, checkout, and apply:
+The first `apply` runs `run_once_before_install-packages.sh` automatically, which
+installs zsh, tmux, ripgrep, fzf, direnv, bat, the i3 stack, and oh-my-zsh +
+powerlevel10k + zsh-autosuggestions. It's apt-based; re-running `apply` won't
+re-run it unless the script changes. (nvim, alacritty and a NerdFont are still
+manual — see Dependencies.)
+
+If chezmoi is already installed, just:
 ```
 chezmoi init --apply --verbose https://github.com/shreyaspg/dotfiles
 ```
+
+### Daily use: editing and updating files
+The repo is the source of truth. **Don't edit `~/.zshrc` etc. directly** — edit
+the source, then apply. chezmoi tracks where each file came from, so:
+
+```
+chezmoi edit ~/.zshrc      # edit the source for a tracked file, then...
+chezmoi apply              # write changes back into $HOME
+```
+
+Preview before applying:
+```
+chezmoi diff               # what apply would change
+```
+
+Pulled a change you made on another machine? Sync + apply in one go:
+```
+chezmoi update             # git pull in the source, then apply
+```
+
+Add a **new** file to be tracked (chezmoi copies it into the repo with the right name):
+```
+chezmoi add ~/.config/foo/bar.conf
+```
+
+Commit and push your changes upstream:
+```
+chezmoi cd                 # drops you into the source repo (~/.local/share/chezmoi)
+git add -A && git commit -m "update foo" && git push
+exit
+```
+
+### File naming convention
+chezmoi encodes file attributes in the source filename. When browsing this repo:
+| Source name | Applies to | Meaning |
+|-------------|-----------|---------|
+| `dot_zshrc` | `~/.zshrc` | `dot_` → leading `.` |
+| `private_dot_config/i3/config` | `~/.config/i3/config` | `private_` → perms `600` |
+| `executable_i3_cheatsheet.sh` | `…/i3_cheatsheet.sh` | `executable_` → `+x` |
+| `run_once_before_install-packages.sh` | — | runs once, before applying files |
+
+`README.md`, `scripts/`, and `VERSIONS.md` are listed in `.chezmoiignore`, so
+they live in the repo but are never applied to `$HOME`.
 
 
 ## i3 Setup
@@ -105,6 +148,10 @@ exec --no-startup-id feh --bg-scale /usr/share/backgrounds/mountain_wall.png
     ```
 
 ## Dependencies:
+Most are installed automatically by `run_once_before_install-packages.sh` on first
+`chezmoi apply`. The links below are for reference and for the few that stay manual
+(marked **manual**): Neovim, Alacritty, NvChad, NerdFont.
+
 1.  [ZSH](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH#install-and-set-up-zsh-as-default)
 2.  [Neovim-v0.9.5](https://github.com/neovim/neovim/releases/tag/v0.9.5)
 3.  [Alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md#debianubuntu)
